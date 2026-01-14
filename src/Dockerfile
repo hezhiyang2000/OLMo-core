@@ -62,17 +62,7 @@ ARG FLASH_ATTN_VERSION=2.8.2
 RUN pip install --no-build-isolation --no-cache-dir flash-attn==${FLASH_ATTN_VERSION}
 
 # Install flash-attn 3
-ARG FLASH_ATTN_3_SHA="92ca9da8d66f7b34ff50dc080ec0fef9661260d6"
-ARG FA3_MAX_JOBS=16
-RUN git clone --depth 1 --recurse-submodules --shallow-submodules https://github.com/Dao-AILab/flash-attention.git && \
-    cd flash-attention && \
-    git fetch --depth 1 origin ${FLASH_ATTN_3_SHA} && \
-    git checkout ${FLASH_ATTN_3_SHA} && \
-    git submodule update --init --depth 1 && \
-    cd hopper && \
-    FLASH_ATTENTION_DISABLE_FP16=TRUE MAX_JOBS=${FA3_MAX_JOBS} python setup.py install && \
-    cd /app/build && \
-    rm -rf flash-attention
+RUN pip install --no-cache-dir https://github.com/windreamer/flash-attention3-wheels/releases/download/2026.01.12-6b9e0bf/flash_attn_3-3.0.0b1%2B20260112.cu128torch291cxx11abitrue.ea8f73-cp39-abi3-linux_x86_64.whl
 
 # Install transformer-engine.
 ARG TE_VERSION=2.9
